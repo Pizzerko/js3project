@@ -1,7 +1,10 @@
 var roll = 0;
 const values = [];
 var bool = false;
+var otherRoll = true;
 var diceRoll = 0;
+var doubleTimes = 0;
+var tripleTimes = 0;
 function getRandomInteger(lower, upper){
     //R = parseInt(rnd * (upper - (lower - 1))) + lower
     var multiplier = upper - (lower - 1);
@@ -15,8 +18,11 @@ function initialize(){
     meanVal=document.getElementById("mean");
     medianVal=document.getElementById("median");
     modeVal=document.getElementById("mode");
+    doubles=document.getElementById("doubles");
+    triples=document.getElementById("triples");
 }
 function oneDice(){
+    if(otherRoll){
     for(var i = 1; i <= 6; i++){
         var newRow = table.insertRow();
         var newCell = newRow.insertCell();
@@ -26,8 +32,11 @@ function oneDice(){
     }
     bool = true;
     diceRoll = 1;
+    otherRoll = false;
+}
 }
 function twoDice(){
+    if(otherRoll){
     for(var i = 2; i <=12; i++){
         var newRow = table.insertRow();
         var newCell = newRow.insertCell();
@@ -37,8 +46,11 @@ function twoDice(){
     }
     bool = true;
     diceRoll = 2;
+    otherRoll=false;
+}
 }
 function threeDice(){
+    if(otherRoll){
     for(var i = 3; i <=18; i++){
         var newRow = table.insertRow();
         var newCell = newRow.insertCell();
@@ -48,43 +60,39 @@ function threeDice(){
     }
     bool = true;
     diceRoll = 3;
+    otherRoll=false;
+}
 }
 function rollDice(){
     if(bool){
+    var dieRoll1 = getRandomInteger(1,6);
+    var dieRoll2 = getRandomInteger(1,6);
+    var dieRoll3 = getRandomInteger(1,6);
+    var total = dieRoll1;
+    if(diceRoll == 2){
+        if(dieRoll1 == dieRoll2){
+            doubleTimes++;
+            doubles.innerHTML = "Doubles: " + doubleTimes;
+        }
+        total += dieRoll2;    
+    }
     if(diceRoll == 3){
-        rollDice3();
+        if(dieRoll1 == dieRoll2 == dieRoll3){
+            tripleTimes++;
+            triples.innerHTML = "Triples: " + tripleTimes;
+        }
+        else if(dieRoll1 == dieRoll2 || dieRoll2 == dieRoll3 || dieRoll3 == dieRoll1){
+            doubleTimes++;
+            doubles.innerHTML = "Doubles: " + doubleTimes;
+        }
+        total += dieRoll2 + dieRoll3;
     }
-    else if(diceRoll == 2){
-        rollDice2();
-    }
-    else{
-        rollDice1();
-    }
-    }
-}
-function rollDice1(){
-    let dieRoll = getRandomInteger(1,6);
     roll++;
     rollVal.innerHTML = "Roll: " + roll;
-    resultVal.innerHTML = "Result: " + dieRoll;
-    mValues(dieRoll);
-    frequency(dieRoll);
+    resultVal.innerHTML = "Result: " + total;
+    mValues(total);
+    frequency(total);
     }
-function rollDice2(){
-    let dieRoll = getRandomInteger(2,12);
-    roll++;
-    rollVal.innerHTML = "Roll: " + roll;
-    resultVal.innerHTML = "Result: " + dieRoll;
-    mValues(dieRoll);
-    frequency(dieRoll);
-}
-function rollDice3(){
-    let dieRoll = getRandomInteger(3,18);
-    roll++;
-    rollVal.innerHTML = "Roll: " + roll;
-    resultVal.innerHTML = "Result: " + dieRoll;
-    mValues(dieRoll);
-    frequency(dieRoll);
 }
 function frequency(rVal){
     var row = rVal - diceRoll + 1;
