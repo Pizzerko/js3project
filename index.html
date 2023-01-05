@@ -5,7 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="index.js"></script>
     <style>
+        span{
+            font-size: 25px;
+        }
         h1{
             text-align: center;
             font-size: 40px;
@@ -19,19 +23,65 @@
             flex-direction: row;
             justify-content: center;
         }   
+        .container1{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
+        .box{
+            border-style: solid;
+        }
         button{
             width:200px;
             height:100px;
         }
+        table{
+            border:thick solid grey;
+            border-collapse: collapse;
+            width:25%;
+        }
+        td, td{
+            border:thin solid black;
+            padding: 8px;
+            width:50%;
+        }
+        #diceTable{
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
-<body>
+<body onload="initialize();">
     <h1>Dice Roller!</h1>
     <p>How many dice do you want to roll?</p>
     <div class="container">
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
+        <button onclick="oneDice();">1</button>
+        <button onclick="twoDice();">2</button>
+        <button onclick="threeDice();">3</button>
     </div>
+    <div class="container">
+        <button onclick="rollDice();">Roll!</button>
+    </div>
+    <p></p>
+    <div class="box">
+        <div class="container1">
+        <span id="roll">Roll:</span>
+        <span id="result">Result:</span>
+        </div>
+        </table>
+    </div>
+    <p></p>
+    <div class="container1">
+    <span id="mean">Mean:</span>
+    <span id="median">Median:</span>
+    <span id="mode">Mode:</span>
+    </div>
+    <p></p>
+    <table id="diceTable">
+        <tr>
+            <th>Numbers</th>
+            <th>Frequency</th>
+        </tr>
+    </table>
 </body>
 </html>
